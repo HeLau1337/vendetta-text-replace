@@ -11,3 +11,10 @@ export interface VencordCloudSyncSettings {
 	authenticated: boolean;
 	backendUrl: string;
 }
+
+export type VencordTextReplaceRule = Record<"find" | "replace" | "onlyIfIncludes", string>;
+
+export interface VencordTextReplaceRules {
+	TextReplace_rulesString: VencordTextReplaceRule[];
+    TextReplace_rulesRegex: VencordTextReplaceRule[];
+}

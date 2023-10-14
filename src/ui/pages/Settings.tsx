@@ -30,7 +30,7 @@ const useIsFocused = findByName("useIsFocused");
 export default function Settings() {
 	const [newRule, setNewRule] = React.useState("")
 	let rules = storage.rules as Rule[];
-	useProxy(storage)
+	useProxy(storage);
 
 	const navigation = NavigationNative.useNavigation();
 	useIsFocused();
