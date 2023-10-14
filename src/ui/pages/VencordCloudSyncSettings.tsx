@@ -58,7 +58,7 @@ export default function VencordCloudSyncSettings() {
 					size={Button.Sizes.SMALL}
 					color={Button.Colors.RED}
 					disabled={!syncSettings.authenticated}
-					onClick={() => showToast("Sync from Cloud was pressed but nothing happened yet.")}
+					onPress={() => showToast("Sync from Cloud was pressed but nothing happened yet.")}
 				>Sync from Cloud</Button>
 			</FormSection>
 		</ScrollView>

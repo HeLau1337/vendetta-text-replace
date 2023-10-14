@@ -85,7 +85,7 @@ export default function Settings() {
 			<FormSection>
 				<FormRow
 					label="Vencord TextReplace Cloud Sync Settings"
-					onClick={editVencordSyncSettings}
+					onPress={editVencordSyncSettings}
 				/>
 			</FormSection>
 		</ScrollView>
