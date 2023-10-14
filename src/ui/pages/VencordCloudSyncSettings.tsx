@@ -55,8 +55,6 @@ export default function VencordCloudSyncSettings() {
 			<FormSection>
 				<Button
 					sublabel="This will overwrite your local settings with the ones on the cloud. Use wisely!"
-					size={Button.Sizes.SMALL}
-					color={Button.Colors.RED}
 					disabled={!syncSettings.authenticated}
 					onPress={() => showToast("Sync from Cloud was pressed but nothing happened yet.")}
 				>Sync from Cloud</Button>
