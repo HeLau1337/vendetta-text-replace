@@ -8,6 +8,7 @@ import { Rule } from "../../def";
 import AddRuleButton from "../components/AddRuleButton";
 import RuleRow from "../components/RuleRow";
 import EditRule from "./EditRule";
+import VencordCloudSyncSettings from "./VencordCloudSyncSettings";
 
 // Components
 const { ScrollView, TextInput } = General;
@@ -52,6 +53,13 @@ export default function Settings() {
 		}
 	}
 
+	const editVencordSyncSettings = () => {
+		navigation.push("VendettaCustomPage", {
+			title: "Vencord TextReplace Cloud Sync",
+			render: () => <VencordCloudSyncSettings/>
+		})
+	}
+
 	return (
 		<ScrollView>
 			<FormSection title="Rules">
@@ -73,9 +81,11 @@ export default function Settings() {
 					trailing={<AddRuleButton onPress={addRuleCallback} />}
 				/>
 			</FormSection>
-			<FormSection title="Sync Vencord TextReplace Rules">
+			<FormDivider></FormDivider>
+			<FormSection>
 				<FormRow
-					label="HeLau1337's vendetta-text-replace"
+					label="Vencord TextReplace Cloud Sync Settings"
+					onClick={editVencordSyncSettings}
 				/>
 			</FormSection>
 		</ScrollView>

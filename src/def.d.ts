@@ -5,3 +5,9 @@ export interface Rule {
 	replace: string;
 	regex: boolean;
 }
+
+export interface VencordCloudSyncSettings {
+	vencordSyncEnabled: boolean;
+	authenticated: boolean;
+	backendUrl: string;
+}
