@@ -7,9 +7,10 @@ export interface Rule {
 }
 
 export interface VencordCloudSyncSettings {
-	vencordSyncEnabled: boolean;
 	authenticated: boolean;
 	backendUrl: string;
+	syncVersion: number;
+	vencordCloudSecret: any;
 }
 
 export type VencordTextReplaceRule = Record<"find" | "replace" | "onlyIfIncludes", string>;

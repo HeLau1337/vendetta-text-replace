@@ -62,6 +62,13 @@ export default function Settings() {
 
 	return (
 		<ScrollView>
+			<FormSection>
+				<FormRow
+					label="Vencord TextReplace Cloud Sync Settings"
+					onPress={editVencordSyncSettings}
+				/>
+				<FormDivider />
+			</FormSection>
 			<FormSection title="Rules">
 				{rules.map((rule, index) => <>
 					<RuleRow rule={rule} index={index} />
@@ -79,13 +86,6 @@ export default function Settings() {
 						style={styles.input}
 					/>}
 					trailing={<AddRuleButton onPress={addRuleCallback} />}
-				/>
-			</FormSection>
-			<FormDivider></FormDivider>
-			<FormSection>
-				<FormRow
-					label="Vencord TextReplace Cloud Sync Settings"
-					onPress={editVencordSyncSettings}
 				/>
 			</FormSection>
 		</ScrollView>
