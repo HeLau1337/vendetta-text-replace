@@ -6,7 +6,8 @@
 	"dependencies": {
 		"@swc/helpers": "^0.5.3",
 		"buffer": "^6.0.3",
-		"fflate": "^0.8.1"
+		"fflate": "^0.8.1",
+		"@nexpid/vdp-shared": "1.0.1"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^25.0.5",
