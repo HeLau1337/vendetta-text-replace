@@ -54,7 +54,6 @@ export async function deauthorizeCloud() {
 
 export async function authorizeCloud() {
     if (await getAuthorization() !== undefined) {
-        console.debug("authorizeCloud() | getAuthorization() returned value");
         storage.vencordCloudSyncSettings.authenticated = true;
         return;
     }
@@ -62,7 +61,6 @@ export async function authorizeCloud() {
     try {
         const oauthConfiguration = await fetch(new URL("/v1/oauth/settings", getCloudUrl()));
         var { clientId, redirectUri } = await oauthConfiguration.json();
-        console.debug("authorizeCloud() | clientId: ", clientId, " ; redirectUri: ", redirectUri);
     } catch(error) {
         console.error(error);
         showToast("Cloud Integration: Setup failed (couldn't retrieve OAuth configuration).");
@@ -89,7 +87,6 @@ export async function authorizeCloud() {
                 cancelCompletesFlow: false,
                 callback: async ({ location }: any) => {
                     if (!location) {
-                        console.debug("authorizeCloud() -> pushModal() -> callback | location is false/invalid");
                         storage.vencordCloudSyncSettings.authenticated = false;
                         return;
                     }

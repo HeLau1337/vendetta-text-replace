@@ -35,7 +35,7 @@ function convertToVendettaTextReplaceRules(vencordRules: VencordTextReplaceRules
 	const REGEX_RULES_KEY = "TextReplace_rulesRegex";
     const TRUNC_LIMIT = 20;
 	let vendettaRules: Rule[] = [];
-    console.debug("vencordRules:" + JSON.stringify(vencordRules));
+
 	vencordRules[STRING_RULES_KEY].forEach(vencordRule => {
         if (vencordRule.find !== "" && vencordRule.replace !== "") {
             vendettaRules.push({
@@ -48,24 +48,34 @@ function convertToVendettaTextReplaceRules(vencordRules: VencordTextReplaceRules
         }
 	});
 	vencordRules[REGEX_RULES_KEY].forEach(vencordRule => {
-		const regExpFlags = /^(.*)\/([a-z]+)$/;
+		const regExpFlags = /(\/([a-z]+)(?<!\\\/[a-z]+))$/;
 		const match = vencordRule["find"].match(regExpFlags);
 		let flags = "";
+        let find = vencordRule.find;
 		if (match) {
-			flags = match[2];
+			flags = match[1];
+            find = vencordRule["find"].split(flags)[0]; // remove the flags from the find-string (including fwd slash)
+            flags = flags.split("/")[1]; // remove the fwd slash from the flags string
 		}
+
+        /* If the "g" (global search) flag is not part of the imported Vencord flags,
+           add it to the Vendetta flags per default because the flag is also hard-coded into Vencord's TextReplace per default. */
+        if (!flags.split("").includes("g")) {
+            flags = flags + "g";
+        }
+        flags = flags.split("").sort().join("");
 
         if (vencordRule.find !== "" && vencordRule.replace !== "") {
             vendettaRules.push({
                 name: truncate(vencordRule.find, TRUNC_LIMIT) + " → " + truncate(vencordRule.replace, TRUNC_LIMIT),
-                match: vencordRule.find,
+                match: find,
                 flags: flags,
                 replace: vencordRule.replace,
                 regex: true
             });
         }
 	});
-    console.debug("vendettaRules:" + JSON.stringify(vendettaRules));
+
 	return vendettaRules;
 }
 
@@ -97,7 +107,6 @@ export function importVencordTextReplaceRules(data: string) {
 
 export async function getCloudSettings(shouldNotify = true, force = false) {
     try {
-        console.debug("Start getting cloud settings...");
         const res = await fetch(new URL("/v1/settings", getCloudUrl()), {
             method: "GET",
             headers: new Headers({
@@ -106,7 +115,6 @@ export async function getCloudSettings(shouldNotify = true, force = false) {
                 "If-None-Match": force ? "" : storage.vencordCloudSyncSettings.syncVersion.toString()
             }),
         });
-        console.debug("vencordCloud/v1/settings response: ", res);
 
         if (res.status === 404) {
             console.info("No settings on the cloud");

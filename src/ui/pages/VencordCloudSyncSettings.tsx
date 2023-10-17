@@ -86,7 +86,6 @@ export default function VencordCloudSyncSettings() {
 					text={"Sync from Cloud"}
 					disabled={!storage.vencordCloudSyncSettings.authenticated}
 					onPress={() => {
-						console.debug("'Sync from Cloud' pressed");
 						getCloudSettings(true, true);
 					}}
 				>Sync from Cloud</Button>
