@@ -1,6 +1,6 @@
 {
-    "name": "Text Replace Sync",
-    "description": "Generic text replacement plugin with settings sync",
+    "name": "Text Replace (fork with Vencord Cloud Sync)",
+    "description": "Generic text replacement plugin, additionally support to sync TextReplace rules with the Vencord Cloud.",
     "authors": [
         {
             "name": "Fiery",
