@@ -16,22 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { stylesheet as StyleSheet, NavigationNative } from "@vendetta/metro/common";
+import { stylesheet as StyleSheet } from "@vendetta/metro/common";
 import { storage } from "@vendetta/plugin";
 import { useProxy } from "@vendetta/storage";
 import { rawColors } from "@vendetta/ui";
-import { Forms, General } from "@vendetta/ui/components";
+import { Forms, General, Button } from "@vendetta/ui/components";
 import { VencordCloudSyncSettings } from "../../def";
 import { authorizeCloud } from "../../utils/cloud";
 import { getCloudSettings } from "../../utils/settingsSync";
 
 // Components
-const { ScrollView, Button } = General;
-const { FormSection, FormInput, FormDivider, FormSwitchRow, FormRow, FormLabel } = Forms;
+const { ScrollView } = General;
+const { FormSection, FormInput, FormDivider, FormSwitchRow, FormRow } = Forms;
 
 const styles = StyleSheet.createThemedStyleSheet({
-	delete: {
-		color: rawColors.RED_400
+	dangerButton: {
+		backgroundColor: rawColors.RED_400,
+		marginHorizontal: 16
+	},
+	inputLabel: {
+		marginTop: -40
 	}
 });
 
@@ -49,8 +53,6 @@ export default function VencordCloudSyncSettings() {
 		storage.vencordCloudSyncSettings = getDefaultVencordCloudSyncSettings();
 
 	useProxy(storage);
-
-	const navigation = NavigationNative.useNavigation();
 
 	return (
 		<ScrollView>
@@ -71,18 +73,23 @@ export default function VencordCloudSyncSettings() {
 					onChange={(v: string) => storage.vencordCloudSyncSettings.backendUrl = v}
 					title="Backend URL"
 				/>
+				<FormRow
+					subLabel="Which backend to use when using cloud integrations."
+					style={styles.inputLabel}
+				/>
 			</FormSection>
 			<FormSection>
 				<FormDivider />
 				<FormRow label="This will overwrite your local settings with the ones on the cloud. Use wisely!" />
 				<Button
-						title="Sync from Cloud"
-						disabled={!storage.vencordCloudSyncSettings.authenticated}
-						onPress={() => {
-							console.debug("Sync from Cloud pressed");
-							getCloudSettings(true, true);
-						}}
-					>Sync from Cloud</Button>
+					style={styles.dangerButton}
+					text={"Sync from Cloud"}
+					disabled={!storage.vencordCloudSyncSettings.authenticated}
+					onPress={() => {
+						console.debug("'Sync from Cloud' pressed");
+						getCloudSettings(true, true);
+					}}
+				>Sync from Cloud</Button>
 			</FormSection>
 		</ScrollView>
 	);

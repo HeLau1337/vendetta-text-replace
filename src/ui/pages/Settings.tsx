@@ -12,7 +12,7 @@ import VencordCloudSyncSettings from "./VencordCloudSyncSettings";
 
 // Components
 const { ScrollView, TextInput } = General;
-const { FormRow, FormSection, FormDivider } = Forms;
+const { FormRow, FormSection, FormDivider, FormArrow } = Forms;
 
 const styles = StyleSheet.createThemedStyleSheet({
 	input: {
@@ -62,10 +62,11 @@ export default function Settings() {
 
 	return (
 		<ScrollView>
-			<FormSection>
+			<FormSection title="Import/export rules">
 				<FormRow
 					label="Vencord TextReplace Cloud Sync Settings"
 					onPress={editVencordSyncSettings}
+					trailing={<FormArrow />}
 				/>
 				<FormDivider />
 			</FormSection>
