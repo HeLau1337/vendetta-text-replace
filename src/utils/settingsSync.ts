@@ -94,9 +94,9 @@ export function importVencordTextReplaceRules(data: string) {
 	let importedRules: VencordTextReplaceRules;
 
     if ("settings" in parsed && "quickCss" in parsed) {
-		if ("plugins" in parsed.settings && "TextReplace" in parsed.settings.plugins) {
-			if ("rules" in parsed.settings.plugins.TextReplace) {
-				importedRules = parsed.settings.plugins.TextReplace.rules;
+		if ("plugins" in parsed.settings && "TextReplace" in parsed.settings.plugins || "TextReplace2" in parsed.settings.plugins) {
+			if ("rules" in parsed.settings.plugins.TextReplace || "rules" in parsed.settings.plugins.TextReplace2) {
+				importedRules = parsed.settings.plugins.TextReplace.rules ?? parsed.settings.plugins.TextReplace2.rules;
 				storage.rules = convertToVendettaTextReplaceRules(importedRules);
 			} else {
 				throw new Error("There are no TextReplace rules stored in the Vencord Cloud Settings of this user account.");
