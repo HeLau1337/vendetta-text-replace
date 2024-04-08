@@ -36,6 +36,10 @@ function convertToVendettaTextReplaceRules(vencordRules: VencordTextReplaceRules
     const TRUNC_LIMIT = 20;
 	let vendettaRules: Rule[] = [];
 
+    if (!vencordRules[STRING_RULES_KEY] || !vencordRules[REGEX_RULES_KEY]) {
+        throw new Error("Missing required rule keys in Vencord rules.");
+    }
+
 	vencordRules[STRING_RULES_KEY].forEach(vencordRule => {
         if (vencordRule.find !== "" && vencordRule.replace !== "") {
             vendettaRules.push({
@@ -60,8 +64,8 @@ function convertToVendettaTextReplaceRules(vencordRules: VencordTextReplaceRules
 
         /* If the "g" (global search) flag is not part of the imported Vencord flags,
            add it to the Vendetta flags per default because the flag is also hard-coded into Vencord's TextReplace per default. */
-        if (!flags.split("").includes("g")) {
-            flags = flags + "g";
+        if (!flags.includes("g")) {
+            flags += "g";
         }
         flags = flags.split("").sort().join("");
 
@@ -90,9 +94,9 @@ export function importVencordTextReplaceRules(data: string) {
 	let importedRules: VencordTextReplaceRules;
 
     if ("settings" in parsed && "quickCss" in parsed) {
-		if ("plugins" in parsed.settings && "TextReplace" in parsed.settings.plugins) {
-			if ("rules" in parsed.settings.plugins.TextReplace) {
-				importedRules = parsed.settings.plugins.TextReplace.rules;
+		if ("plugins" in parsed.settings && "TextReplace" in parsed.settings.plugins || "TextReplace2" in parsed.settings.plugins) {
+			if ("rules" in parsed.settings.plugins.TextReplace || "rules" in parsed.settings.plugins.TextReplace2) {
+				importedRules = parsed.settings.plugins.TextReplace.rules ?? parsed.settings.plugins.TextReplace2.rules;
 				storage.rules = convertToVendettaTextReplaceRules(importedRules);
 			} else {
 				throw new Error("There are no TextReplace rules stored in the Vencord Cloud Settings of this user account.");
